@@ -137,6 +137,7 @@ $(document).keydown(function(event){
 	switch(event.keyCode){
 		case 37://左
 			if(moveLeft()){				
+				event.preventDefault();
 				setTimeout("generateOneNumber()",210);
 				setTimeout("isGameOver()",300);
 			}
@@ -144,18 +145,21 @@ $(document).keydown(function(event){
 			break;
 		case 38://上
 			if(moveUp()){
+				event.preventDefault();
 				setTimeout("generateOneNumber()",210);
 				setTimeout("isGameOver()",300);				
 			}
 			break;
 		case 39://右
 			if(moveRight()){
+				event.preventDefault();
 				setTimeout("generateOneNumber()",210);
 				setTimeout("isGameOver()",300);
 			}
 			break;
 		case 40://下
 			if(moveDown()){
+				event.preventDefault();
 				setTimeout("generateOneNumber()",210);
 				setTimeout("isGameOver()",300);
 			}
@@ -174,6 +178,9 @@ document.addEventListener('touchend',function(event){
 	endy=event.changedTouches[0].pageY;
 	var deltax=endx-startx;
 	var deltay=endy-starty;
+	if(Math.abs(deltax)<0.3*documentWidth&&Math.abs(deltay)<0.3*documentWidth){
+		return;
+	}
 	//x轴方向滑动
 	if(Math.abs(deltax)>=Math.abs(deltay)){
 		if(deltax>0){
@@ -207,6 +214,11 @@ document.addEventListener('touchend',function(event){
 		}
 	}
 });
+
+document.addEventListener('touchmove',function(event){
+	event.preventDefault();
+});
+
 
 function moveLeft() {
 	if(!canMoveLeft(board)){
