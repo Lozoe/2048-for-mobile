@@ -1,6 +1,10 @@
 var board=new Array();
 var score=0;
 var hasConflicted=new Array();
+var startx=0;
+var starty=0;
+var endx=0;
+var endy=0;
 $(document).ready(function(){
 	prepareForMobile();
 	newGame();
@@ -157,6 +161,50 @@ $(document).keydown(function(event){
 			}
 		default:
 			break;
+	}
+});
+
+document.addEventListener('touchstart',function(event){
+	startx=event.touches[0].pageX;
+	starty=event.touches[0].pageY;
+});
+
+document.addEventListener('touchend',function(event){
+	endx=event.changedTouches[0].pageX;
+	endy=event.changedTouches[0].pageY;
+	var deltax=endx-startx;
+	var deltay=endy-starty;
+	//x轴方向滑动
+	if(Math.abs(deltax)>=Math.abs(deltay)){
+		if(deltax>0){
+			//move right
+			if(moveRight()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isGameOver()",300);
+			}
+		}else{
+			//move left
+			if(moveLeft()){				
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isGameOver()",300);
+			}
+		}
+	}
+	//y轴滑动
+	else{
+		if(deltay>0){
+			//move down
+			if(moveDown()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isGameOver()",300);
+			}
+		}else{
+			//move up
+			if(moveUp()){
+				setTimeout("generateOneNumber()",210);
+				setTimeout("isGameOver()",300);				
+			}
+		}
 	}
 });
 
