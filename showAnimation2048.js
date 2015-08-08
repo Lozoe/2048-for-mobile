@@ -10,7 +10,6 @@ function showNumberWithAnimation(i,j,randNumber) {
 		top:getPositionTop(i,j),
 		left:getPositionLeft(i,j)
 	},50);
-
 }
 
 

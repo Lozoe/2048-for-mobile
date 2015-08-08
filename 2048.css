@@ -1,3 +1,7 @@
+body {
+	background-color: rgba(237, 240, 232, 0.5);
+}
+
 header {
 	display:block;
 	margin:0 auto;
@@ -63,4 +67,42 @@ header p {
 	line-height:100px;
 	text-align: center;
 	position:absolute;
+}
+
+.mask {
+	height: 599px;
+	width: 800px;
+	width: 100%;
+	background-color: rgba(65, 26, 26, 0.51);
+	position: absolute;
+	top: 163px;
+	/* left: 272px; */
+}
+
+.over {
+	height: 50px;
+	width: 160px;
+	text-align: center;
+	line-height: 50px;
+	/* border: 2px solid rgba(175, 150, 150, 0.83); */
+	border-radius: 5px;
+	/* position: absolute; */
+	margin: 230px auto;
+	font-size: 30px;
+	color: antiquewhite;
+	font-weight: 300;
+	margin-bottom: 50px;
+}
+
+.again {
+	height: 40px;
+	line-height: 40px;
+	width: 100px;
+	border: 2px solid #CCC;
+	border-radius: 5px;
+	text-align: center;
+	margin: 0 auto;
+	background-color: rgba(184, 134, 11, 0.33);
+	cursor: pointer;
+	color: black;
 }

@@ -6,6 +6,14 @@ var starty=0;
 var endx=0;
 var endy=0;
 $(document).ready(function(){
+	createMask();
+	var mask=document.getElementById("mask");
+	mask.style.display="none";
+	var again=document.getElementById("again");
+	again.addEventListener('click',function(event){
+		prepareForMobile();
+		newGame();
+	});
 	prepareForMobile();
 	newGame();
 });
@@ -32,6 +40,8 @@ function newGame() {
 	//在随机两个格子生成数字
 	generateOneNumber();
 	generateOneNumber();
+	var mask=document.getElementById("mask");
+	mask.style.display="none";
 }
 
 function init() {
@@ -335,9 +345,9 @@ function moveDown() {
 	// moveDown
 	for(var j=0;j<4;j++){
 		for(var i=2;i>=0;i--){
-			console.log("board["+i+"]["+j+"]"+board[i][j]);
+			//console.log("board["+i+"]["+j+"]"+board[i][j]);
 			if(board[i][j]!=0){
-				console.log("board["+i+"]["+j+"]***"+board[i][j]);
+				//console.log("board["+i+"]["+j+"]***"+board[i][j]);
 				//对ij位置上面的所有元素进行考察
 				for(var k=3;k>i;k--){
 					if(board[k][j]==0&&noBlockVertical(j,i,k,board)){//判断下面的位置是否为空，并且第j列i行到k行无障碍
@@ -348,8 +358,8 @@ function moveDown() {
 						continue;
 					}
 					else if(board[k][j]==board[i][j]&&noBlockVertical(j,i,k,board)&&!hasConflicted[k][j]){
-						console.log("board["+i+"]["+j+"]==="+board[i][j]);
-						console.log("board["+k+"]["+j+"]==="+board[k][j]);
+						//console.log("board["+i+"]["+j+"]==="+board[i][j]);
+						//console.log("board["+k+"]["+j+"]==="+board[k][j]);
 						//move
 						showMoveAnimation(i,j,k,j);						
 						//add
@@ -376,6 +386,23 @@ function isGameOver() {
 	}
 }
 
+function singleton(fn) {
+	var result;
+	return function(){
+		return result||(result=fn.apply(this,arguments));
+	};
+}
+
+var createMask=singleton(function(){
+	var div=document.createElement('div');
+	div.className="mask";
+	div.id="mask";
+	div.innerHTML='<div class="over">Game Over!</div><div class="again" id="again">Try Again</div>';	
+	return document.body.appendChild(div);
+});
+
 function gameOver() {
-	alert("Game over!");
+	//alert("Game over!");
+	createMask();
+	mask.style.display="block";
 }
