@@ -14,6 +14,10 @@ $(document).ready(function(){
 		prepareForMobile();
 		newGame();
 	});
+	var cancel=document.getElementById("cancel");
+	cancel.addEventListener('click',function(event){
+		hideMask();
+	});
 	prepareForMobile();
 	newGame();
 });
@@ -397,12 +401,18 @@ var createMask=singleton(function(){
 	var div=document.createElement('div');
 	div.className="mask";
 	div.id="mask";
-	div.innerHTML='<div class="over">Game Over!</div><div class="again" id="again">Try Again</div>';	
-	return document.body.appendChild(div);
+	div.innerHTML='<div class="over" id="over" >Game Over!</div><div class="again" id="again">Try Again</div><div id="cancel"></div>';	
+	/*var gridContainer=document.getElementById("gridContainer");
+	var cancel=document.createElement('div');
+	cancel.id="cancel";
+	gridContainer.appendChild(cancel);*/
+	//return document.body.appendChild(div);
+	return gridContainer.appendChild(div);
 });
 
 function gameOver() {
 	//alert("Game over!");
 	createMask();
-	mask.style.display="block";
+	showMask();
+	//mask.style.display="block";
 }
