@@ -10,12 +10,12 @@ $(document).ready(function(){
 	var mask=document.getElementById("mask");
 	mask.style.display="none";
 	var again=document.getElementById("again");
-	again.addEventListener('click',function(event){
+	eventUtil.addHandler(again,'click',function(event){
 		prepareForMobile();
 		newGame();
 	});
 	var cancel=document.getElementById("cancel");
-	cancel.addEventListener('click',function(event){
+	eventUtil.addHandler(cancel,'click',function(event){
 		hideMask();
 	});
 	prepareForMobile();
@@ -182,57 +182,62 @@ $(document).keydown(function(event){
 	}
 });
 
-document.addEventListener('touchstart',function(event){
+/*document.addEventListener('touchstart',function(event){
+	startx=event.touches[0].pageX;
+	starty=event.touches[0].pageY;
+});*/
+
+eventUtil.addHandler(document,'touchstart',function(event){
+	var event=eventUtil.getEvent(event);
 	startx=event.touches[0].pageX;
 	starty=event.touches[0].pageY;
 });
 
-document.addEventListener('touchend',function(event){
+eventUtil.addHandler(document,'touchend',function(event){
 	endx=event.changedTouches[0].pageX;
-	endy=event.changedTouches[0].pageY;
-	var deltax=endx-startx;
-	var deltay=endy-starty;
-	if(Math.abs(deltax)<0.3*documentWidth&&Math.abs(deltay)<0.3*documentWidth){
-		return;
-	}
-	//x轴方向滑动
-	if(Math.abs(deltax)>=Math.abs(deltay)){
-		if(deltax>0){
-			//move right
-			if(moveRight()){
-				setTimeout("generateOneNumber()",210);
-				setTimeout("isGameOver()",300);
-			}
-		}else{
-			//move left
-			if(moveLeft()){				
-				setTimeout("generateOneNumber()",210);
-				setTimeout("isGameOver()",300);
+		endy=event.changedTouches[0].pageY;
+		var deltax=endx-startx;
+		var deltay=endy-starty;
+		if(Math.abs(deltax)<0.3*documentWidth&&Math.abs(deltay)<0.3*documentWidth){
+			return;
+		}
+		//x轴方向滑动
+		if(Math.abs(deltax)>=Math.abs(deltay)){
+			if(deltax>0){
+				//move right
+				if(moveRight()){
+					setTimeout("generateOneNumber()",210);
+					setTimeout("isGameOver()",300);
+				}
+			}else{
+				//move left
+				if(moveLeft()){				
+					setTimeout("generateOneNumber()",210);
+					setTimeout("isGameOver()",300);
+				}
 			}
 		}
-	}
-	//y轴滑动
-	else{
-		if(deltay>0){
-			//move down
-			if(moveDown()){
-				setTimeout("generateOneNumber()",210);
-				setTimeout("isGameOver()",300);
-			}
-		}else{
-			//move up
-			if(moveUp()){
-				setTimeout("generateOneNumber()",210);
-				setTimeout("isGameOver()",300);				
+		//y轴滑动
+		else{
+			if(deltay>0){
+				//move down
+				if(moveDown()){
+					setTimeout("generateOneNumber()",210);
+					setTimeout("isGameOver()",300);
+				}
+			}else{
+				//move up
+				if(moveUp()){
+					setTimeout("generateOneNumber()",210);
+					setTimeout("isGameOver()",300);				
+				}
 			}
 		}
-	}
 });
 
-document.addEventListener('touchmove',function(event){
+eventUtil.addHandler(document,'touchmove',function(event){
 	event.preventDefault();
 });
-
 
 function moveLeft() {
 	if(!canMoveLeft(board)){
