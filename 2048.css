@@ -38,6 +38,24 @@ header p {
 	margin:20px auto;
 }
 
+#score {
+	margin-left:10px;
+}
+
+#pScore {
+	position: relative;
+	width: 110px;
+}
+
+.addition {
+	height: 30px;
+	width: 65px;
+	position: absolute;
+	top: 0;
+	left: 34px;
+	color: rgba(224, 149, 149, 0.98);
+}
+
 #gridContainer {
 	height:460px;
 	width:460px;

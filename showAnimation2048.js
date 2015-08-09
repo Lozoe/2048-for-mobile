@@ -22,8 +22,22 @@ function showMoveAnimation(fromx, fromy, tox, toy) {
 	}, 200);
 }
 
-function updateScore(score) {
-	$("#score").text(score);
+function updateScore(score,difference) {
+	//var previousScore=$("#score").text();
+	//var difference = score - previousScore;
+	$("#score").text(score);	
+	$(".addition").className="addition";
+	$(".addition").text("+"+difference);
+	if (difference > 0) {
+	   	$("#addition").css('display','block');
+	   	$("#addition").animate({display:'block',left:'50px',top:"-25px",'font-size':'12px','color':'blue'},800).fadeOut('slow');
+	   	$("#addition").animate({left:'34px',top:"0px",'font-size':'20px','color':'blue'},100);	   
+		// $("#addition").css('left','34px'); 
+		// $("#addition").css('top',0); 
+		// $("#addition").css('font-size','20px'); 	
+		// $("#addition").css('display','none'); 	
+	}
+		
 }
 
 function showMask() {

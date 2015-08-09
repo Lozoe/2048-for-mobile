@@ -7,8 +7,11 @@ var endx=0;
 var endy=0;
 $(document).ready(function(){
 	createMask();
+	createScoreDiv();
 	var mask=document.getElementById("mask");
 	mask.style.display="none";
+	var addition=document.getElementById("addition");
+	addition.style.display="none";
 	var again=document.getElementById("again");
 	eventUtil.addHandler(again,'click',function(event){
 		prepareForMobile();
@@ -66,7 +69,8 @@ function init() {
 	}
 	updateBoardView();
 	score=0;
-	updateScore(score);
+	// updateScore(score);
+	updateScore(score,0);
 }
 
 
@@ -243,9 +247,11 @@ function moveLeft() {
 	if(!canMoveLeft(board)){
 		return false;
 	}
+
 	//moveLeft
 	for(var i=0;i<4;i++){
 		for(var j=1;j<4;j++){
+			var pre=score;
 			if(board[i][j]!=0){
 				for(var k=0;k<j;k++){
 					if(board[i][k]==0&&noBlockHorizontal(i,k,j,board)){//落脚位置不为空，且第i行k到j列没有障碍物
@@ -261,8 +267,10 @@ function moveLeft() {
 						board[i][k]+=board[i][j];
 						board[i][j]=0;	
 						//add score
+						// score+=board[i][k];
+						// updateScore(score);	
 						score+=board[i][k];
-						updateScore(score);	
+						updateScore(score,score-pre);	
 						hasConflicted[i][k]=true;			
 						continue;
 					}
@@ -282,8 +290,10 @@ function moveRight() {
 	//moveRight
 	for(var i=0;i<4;i++){
 		for(var j=2;j>=0;j--){
+			var pre=score;
 			if(board[i][j]!=0){
 				for(var k=3;k>j;k--){
+					
 					if(board[i][k]==0&&noBlockHorizontal(i,j,k,board)){//落脚位置不为空，且第i行j列到k列没有障碍物
 						//move
 						showMoveAnimation(i,j,i,k);
@@ -297,8 +307,10 @@ function moveRight() {
 						board[i][k]+=board[i][j];
 						board[i][j]=0;	
 						//add score
+						// score+=board[i][k];
+						// updateScore(score);	
 						score+=board[i][k];
-						updateScore(score);		
+						updateScore(score,score-pre);		
 						hasConflicted[i][k]=true;				
 						continue;
 					}
@@ -317,6 +329,7 @@ function moveUp() {
 	// moveUp
 	for(var j=0;j<4;j++){
 		for(var i=1;i<4;i++){
+			var pre=score;
 			if(board[i][j]!=0){
 				//对ij位置上面的所有元素进行考察
 				for(var k=0;k<i;k++){
@@ -334,8 +347,10 @@ function moveUp() {
 						board[k][j]+=board[i][j];
 						board[i][j]=0;
 						//add score
+						// score+=board[k][j];
+						// updateScore(score);	
 						score+=board[k][j];
-						updateScore(score);	
+						updateScore(score,score-pre);
 						hasConflicted[k][j]=true;
 						continue;
 					}
@@ -354,6 +369,7 @@ function moveDown() {
 	// moveDown
 	for(var j=0;j<4;j++){
 		for(var i=2;i>=0;i--){
+			var pre=score;
 			//console.log("board["+i+"]["+j+"]"+board[i][j]);
 			if(board[i][j]!=0){
 				//console.log("board["+i+"]["+j+"]***"+board[i][j]);
@@ -375,8 +391,10 @@ function moveDown() {
 						board[k][j]+=board[i][j];
 						board[i][j]=0;
 						//add score
+						// score+=board[k][j];
+						// updateScore(score);
 						score+=board[k][j];
-						updateScore(score);	
+						updateScore(score,score-pre);	
 						hasConflicted[k][j]=true;
 						continue;
 					}
@@ -413,6 +431,15 @@ var createMask=singleton(function(){
 	gridContainer.appendChild(cancel);*/
 	//return document.body.appendChild(div);
 	return gridContainer.appendChild(div);
+});
+
+var createScoreDiv=singleton(function(){
+	var div=document.createElement('div');
+	div.className="addition";
+	div.id="addition";
+	div.innerHTML='0';
+	var score=document.getElementById("score").parentNode;	
+	return score.appendChild(div);
 });
 
 function gameOver() {
